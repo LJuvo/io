@@ -3,11 +3,16 @@
 // import store from "./store";
 // import router from "./router";
 // import "./styles/index.less";
-// import iView from "iview";
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+import iView from "iview";
+import "iview/dist/styles/iview.css";
 
 // Vue.config.productionTip = false;
-// Vue.use(iView);
-// window._ = require("lodash");
+Vue.use(iView);
+window._ = require("lodash");
 
 // router.beforeEach((to, from, next) => {
 //   iView.LoadingBar.start();
@@ -25,11 +30,6 @@
 //   template: "<App/>",
 //   components: { App }
 // });
-
-import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
 
 Vue.config.productionTip = false;
 

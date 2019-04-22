@@ -11,6 +11,9 @@ body {
   margin: 0;
   padding: 0;
   background: @black-grey;
+  height: 100%;
+  width: 100%;
+  background: url("../static/bg.png");
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -18,9 +21,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: @white-grey;
+  height: 100%;
+  width: 100%;
 }
 a {
   color: @white-grey;
   text-decoration: none;
+}
+.ivu-drawer-content {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+.ivu-drawer-header p,
+.ivu-drawer-header-inner,
+.ivu-drawer-header {
+  color: @white-grey !important;
+}
+.ivu-drawer-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 </style>

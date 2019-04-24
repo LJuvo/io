@@ -4,7 +4,7 @@
     <section class="home-content">
       <section class="home-content-mtxt">
         <div class="home-content-mtxt-left">
-          <h1>SWIMMING</h1>
+          <h1 style="color:rgb(235, 169, 96)">SWIMMING</h1>
           <h1>at the world</h1>
         </div>
         <div class="home-content-mtxt-right">

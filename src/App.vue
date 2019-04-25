@@ -13,14 +13,17 @@ body {
   background: @black-grey;
   height: 100%;
   width: 100%;
-  background: url("../static/bg.png");
+  // background: url("../static/bg.png");
+}
+body{
+  background: none!important;
 }
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: @white-grey;
+  // font-family: "Avenir", Helvetica, Arial, sans-serif;
+  // -webkit-font-smoothing: antialiased;
+  // -moz-osx-font-smoothing: grayscale;
+  // text-align: center;
+  // color: @white-grey;
   height: 100%;
   width: 100%;
 }

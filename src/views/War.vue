@@ -1,6 +1,6 @@
 <template>
   <div class="theme" id="war">
-    <div class="top-left">
+    <div class="top-left" @click="onRouter('/')">
       <Icon type="ios-analytics" :size="30" style="margin-top:25%;color:#fff;"/>
     </div>
     <div class="top-center">
@@ -92,6 +92,9 @@ export default {
         ele.active = false;
         if (ele.comd == val) ele.active = true;
       });
+    },
+    onRouter(val) {
+      this.$router.push(val);
     }
   }
 };

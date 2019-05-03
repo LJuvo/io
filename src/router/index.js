@@ -1,7 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
 // import Home from "../views/Home.vue";
-import Home from "../views/War.vue";
+import Home from "../views/Home.vue";
+import Gem from "../views/War.vue";
 // import Root from "../views/Home.vue";
 
 Vue.use(Router);
@@ -17,9 +18,23 @@ export default new Router({
       component: Home
     },
     {
+      path: "/gem",
+      component: Gem
+    },
+    {
       path: "/about",
       name: "关于",
       component: () => import("../views/About.vue")
+    },
+    {
+      path: "/test",
+      name: "组件测试",
+      component: () => import("../views/Test/")
+    },
+    {
+      path: "/404",
+      name: "未知页",
+      component: () => import("../views/404/")
     }
     // {
     //   path: "/",

@@ -32,7 +32,7 @@
             <a @click="onRouter('/gem')">GEM</a>
           </div>
           <div class="sea-content-pane-grid-item">
-            <a @click="onRouter('/404')">Auto</a>
+            <a @click="onRouter('/house')">Auto</a>
           </div>
           <div class="sea-content-pane-grid-item">
             <a @click="onRouter('/test')">Test</a>

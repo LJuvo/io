@@ -3,6 +3,7 @@ import Router from "vue-router";
 // import Home from "../views/Home.vue";
 import Home from "../views/Home.vue";
 import Gem from "../views/War.vue";
+import House from "../views/house/";
 // import Root from "../views/Home.vue";
 
 Vue.use(Router);
@@ -20,6 +21,10 @@ export default new Router({
     {
       path: "/gem",
       component: Gem
+    },
+    {
+      path: "/house",
+      component: House
     },
     {
       path: "/about",

@@ -1,7 +1,9 @@
 <template>
   <div :style="secondMenuSty">
     <slot name="tipLabel"></slot>
-    <slot name="sideMenu" :style="sideMenuSty"></slot>
+    <div :style="sideMenuSty" class="side-menu-sty">
+      <slot name="sideMenu"></slot>
+    </div>
   </div>
 </template>
 
@@ -15,7 +17,10 @@ export default {
         background: "#e6e9ee"
       },
       sideMenuSty: {
-        width: "100%"
+        width: "100%",
+        height: "calc(100% - 50px)",
+        overflow: "hidden",
+        "overflow-y": "auto"
       }
     };
   }

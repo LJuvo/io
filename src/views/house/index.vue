@@ -38,7 +38,7 @@
               </template>
               <template slot="sideMenu">
                 <Menu active-name="1" style="width:100%;background:none;">
-                  <MenuGroup title="内容管理">
+                  <MenuGroup title="简单图形库">
                     <MenuItem name="1">
                       <div @click="absModel ='default'">
                         <Icon type="md-document"/>简单柱状图
@@ -49,20 +49,94 @@
                         <Icon type="md-document"/>简单面积图
                       </div>
                     </MenuItem>
-                    <MenuItem name="2">
-                      <div @click="absModel ='2'">
-                        <Icon type="md-chatbubbles"/>评论管理
+                    <MenuItem name="piechart">
+                      <div @click="absModel ='piechart'">
+                        <Icon type="md-chatbubbles"/>简单饼状图
+                      </div>
+                    </MenuItem>
+                    <MenuItem name="ringchart">
+                      <div @click="absModel ='ringchart'">
+                        <Icon type="md-chatbubbles"/>简单环状图
+                      </div>
+                    </MenuItem>
+                    <MenuItem name="linechart">
+                      <div @click="absModel ='linechart'">
+                        <Icon type="md-chatbubbles"/>简单折线图
+                      </div>
+                    </MenuItem>
+                    <MenuItem name="lineIIchart">
+                      <div @click="absModel ='lineIIchart'">
+                        <Icon type="md-chatbubbles"/>简单折线图II
+                      </div>
+                    </MenuItem>
+                    <MenuItem name="pointschart">
+                      <div @click="absModel ='pointschart'">
+                        <Icon type="md-chatbubbles"/>简单散点图
                       </div>
                     </MenuItem>
                   </MenuGroup>
-                  <MenuGroup title="统计分析">
-                    <MenuItem name="3">
-                      <div @click="absModel ='3'">
-                        <Icon type="md-heart"/>用户留存
+                  <MenuGroup title="基础图形库">
+                    <MenuItem name="groupedbar">
+                      <div @click="absModel ='groupedbar'">
+                        <Icon type="md-document"/>组合柱状图
                       </div>
                     </MenuItem>
-                    <MenuItem name="4">
-                      <Icon type="md-leaf"/>流失用户
+                    <MenuItem name="stackedbar">
+                      <div @click="absModel ='stackedbar'">
+                        <Icon type="md-document"/>堆栈柱状图
+                      </div>
+                    </MenuItem>
+                    <MenuItem name="radialstackedbar">
+                      <div @click="absModel ='radialstackedbar'">
+                        <Icon type="md-document"/>径向堆栈柱状图
+                      </div>
+                    </MenuItem>
+                    <MenuItem name="8">
+                      <div @click="absModel ='default'">
+                        <Icon type="md-document"/>树状图
+                      </div>
+                    </MenuItem>
+                    <MenuItem name="8">
+                      <div @click="absModel ='default'">
+                        <Icon type="md-document"/>雷达图
+                      </div>
+                    </MenuItem>
+                    <MenuItem name="8">
+                      <div @click="absModel ='default'">
+                        <Icon type="md-document"/>标签云图
+                      </div>
+                    </MenuItem>
+                    <MenuItem name="8">
+                      <div @click="absModel ='default'">
+                        <Icon type="md-document"/>竖向业务合作伙伴图
+                      </div>
+                    </MenuItem>
+                  </MenuGroup>
+                  <MenuGroup title="其他图形库">
+                    <MenuItem name="3">
+                      <div @click="absModel =''">
+                        <Icon type="md-heart"/>弦图
+                      </div>
+                    </MenuItem>
+                    <MenuItem name="3">
+                      <div @click="absModel =''">
+                        <Icon type="md-heart"/>打包图
+                      </div>
+                    </MenuItem>
+                    <MenuItem name="3">
+                      <div @click="absModel =''">
+                        <Icon type="md-heart"/>中国地图
+                      </div>
+                    </MenuItem>
+                    <MenuItem name="3">
+                      <div @click="absModel =''">
+                        <Icon type="md-heart"/>力导向图
+                      </div>
+                    </MenuItem>
+                    <MenuItem name="3">
+                      <div @click="absModel =''">
+                        <Icon type="md-heart"/>泰森多边形
+                      </div>
                     </MenuItem>
                   </MenuGroup>
                 </Menu>
@@ -196,15 +270,19 @@ export default {
 .ivu-layout {
   height: 100%;
 }
-/* .ivu-layout-sider {
-  background: #fff;
-  color: #333;
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background-color: transparent;
 }
-.ivu-layout-sider-collapsed {
-  background: #ff9900;
-  color: #fff;
-} */
-/* .ivu-menu-vertical .ivu-menu-item-group-title {
-  padding-left: 20px;
-} */
+::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+  background-color: #ccc;
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+  background-color: #eee;
+}
 </style>

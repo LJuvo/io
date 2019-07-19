@@ -1,0 +1,29 @@
+.preview {
+  height: 100%;
+  width: 100%;
+
+  &-toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 6px 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.outline-wrapper {
+  border: 1px solid #dfdfdf;
+  width: 300px;
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  z-index: 10;
+  #preview-outline {
+    width: 100%;
+    svg {
+      height: 200px;
+    }
+  }
+}

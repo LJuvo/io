@@ -22,4 +22,9 @@ export const svgArr = [
     { label: "巡更点", url: "images/巡更点.svg" },
     { label: "VAV", url: "images/VAV.svg" },
     { label: "智能灯ip转换器", url: "images/智能灯ip转换器.svg" },
-]
+    { label: "视频分析服务", url: "images/视频分析服务.svg" },
+    { label: "传感器", url: "images/传感器.svg" },
+    { label: "采集器", url: "images/采集器.svg" },
+    { label: "执行器", url: "images/执行器.svg" },
+    { label: "照明", url: "images/照明.svg" }
+];

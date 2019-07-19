@@ -38,6 +38,18 @@ export default new Router({
                 import ("../views/Test/")
         },
         {
+            path: "/menu",
+            name: "菜单选择测试",
+            component: () =>
+                import ("../views/Test/menuCheck")
+        },
+        {
+            path: "/graph",
+            name: "MxGraph测试",
+            component: () =>
+                import ("../views/Test/graphP")
+        },
+        {
             path: "/svg",
             name: "SVG组件",
             component: () =>

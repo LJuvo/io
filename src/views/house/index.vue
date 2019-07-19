@@ -15,7 +15,7 @@
           <MenuItem name="1-2">
             <div class="side-menu-item" @click="activeModel = '1-2'">
               <Icon type="ios-search"></Icon>
-              <span>Option 2</span>
+              <span>科技背板</span>
             </div>
           </MenuItem>
           <MenuItem name="1-3">
@@ -41,101 +41,101 @@
                   <MenuGroup title="简单图形库">
                     <MenuItem name="1">
                       <div @click="absModel ='default'">
-                        <Icon type="md-document"/>简单柱状图
+                        <Icon type="md-document" />简单柱状图
                       </div>
                     </MenuItem>
                     <MenuItem name="areachart">
                       <div @click="absModel ='areachart'">
-                        <Icon type="md-document"/>简单面积图
+                        <Icon type="md-document" />简单面积图
                       </div>
                     </MenuItem>
                     <MenuItem name="piechart">
                       <div @click="absModel ='piechart'">
-                        <Icon type="md-chatbubbles"/>简单饼状图
+                        <Icon type="md-chatbubbles" />简单饼状图
                       </div>
                     </MenuItem>
                     <MenuItem name="ringchart">
                       <div @click="absModel ='ringchart'">
-                        <Icon type="md-chatbubbles"/>简单环状图
+                        <Icon type="md-chatbubbles" />简单环状图
                       </div>
                     </MenuItem>
                     <MenuItem name="linechart">
                       <div @click="absModel ='linechart'">
-                        <Icon type="md-chatbubbles"/>简单折线图
+                        <Icon type="md-chatbubbles" />简单折线图
                       </div>
                     </MenuItem>
                     <MenuItem name="lineIIchart">
                       <div @click="absModel ='lineIIchart'">
-                        <Icon type="md-chatbubbles"/>简单折线图II
+                        <Icon type="md-chatbubbles" />简单折线图II
                       </div>
                     </MenuItem>
                     <MenuItem name="pointschart">
                       <div @click="absModel ='pointschart'">
-                        <Icon type="md-chatbubbles"/>简单散点图
+                        <Icon type="md-chatbubbles" />简单散点图
                       </div>
                     </MenuItem>
                   </MenuGroup>
                   <MenuGroup title="基础图形库">
                     <MenuItem name="groupedbar">
                       <div @click="absModel ='groupedbar'">
-                        <Icon type="md-document"/>组合柱状图
+                        <Icon type="md-document" />组合柱状图
                       </div>
                     </MenuItem>
                     <MenuItem name="stackedbar">
                       <div @click="absModel ='stackedbar'">
-                        <Icon type="md-document"/>堆栈柱状图
+                        <Icon type="md-document" />堆栈柱状图
                       </div>
                     </MenuItem>
                     <MenuItem name="radialstackedbar">
                       <div @click="absModel ='radialstackedbar'">
-                        <Icon type="md-document"/>径向堆栈柱状图
+                        <Icon type="md-document" />径向堆栈柱状图
                       </div>
                     </MenuItem>
                     <MenuItem name="8">
                       <div @click="absModel ='default'">
-                        <Icon type="md-document"/>树状图
+                        <Icon type="md-document" />树状图
                       </div>
                     </MenuItem>
                     <MenuItem name="8">
                       <div @click="absModel ='default'">
-                        <Icon type="md-document"/>雷达图
+                        <Icon type="md-document" />雷达图
                       </div>
                     </MenuItem>
                     <MenuItem name="8">
                       <div @click="absModel ='default'">
-                        <Icon type="md-document"/>标签云图
+                        <Icon type="md-document" />标签云图
                       </div>
                     </MenuItem>
                     <MenuItem name="8">
                       <div @click="absModel ='default'">
-                        <Icon type="md-document"/>竖向业务合作伙伴图
+                        <Icon type="md-document" />竖向业务合作伙伴图
                       </div>
                     </MenuItem>
                   </MenuGroup>
                   <MenuGroup title="其他图形库">
                     <MenuItem name="3">
                       <div @click="absModel =''">
-                        <Icon type="md-heart"/>弦图
+                        <Icon type="md-heart" />弦图
                       </div>
                     </MenuItem>
                     <MenuItem name="3">
                       <div @click="absModel =''">
-                        <Icon type="md-heart"/>打包图
+                        <Icon type="md-heart" />打包图
                       </div>
                     </MenuItem>
                     <MenuItem name="3">
                       <div @click="absModel =''">
-                        <Icon type="md-heart"/>中国地图
+                        <Icon type="md-heart" />中国地图
                       </div>
                     </MenuItem>
                     <MenuItem name="3">
                       <div @click="absModel =''">
-                        <Icon type="md-heart"/>力导向图
+                        <Icon type="md-heart" />力导向图
                       </div>
                     </MenuItem>
                     <MenuItem name="3">
                       <div @click="absModel =''">
-                        <Icon type="md-heart"/>泰森多边形
+                        <Icon type="md-heart" />泰森多边形
                       </div>
                     </MenuItem>
                   </MenuGroup>
@@ -148,7 +148,11 @@
               </div>
             </div>
           </div>
-          <div v-if="activeModel == '1-2'">2</div>
+          <div v-if="activeModel == '1-2'">
+            <div :style="contentSty">
+              <d3-rear-model :routerModel="reaModel" :style="boxShadowSty"></d3-rear-model>
+            </div>
+          </div>
           <div v-if="activeModel == '1-3'">3</div>
         </Content>
       </Layout>
@@ -160,14 +164,16 @@
 import TipLabel from "./comps/tiplabel";
 import SecondMenu from "./comps/secondmenu";
 import D3ChartModel from "./d3/";
+import D3RearModel from "./rear/";
 export default {
-  components: { SecondMenu, TipLabel, D3ChartModel },
+  components: { SecondMenu, TipLabel, D3ChartModel, D3RearModel },
   data() {
     return {
       isCollapsed: true,
       content: "content",
       activeModel: "1-1",
       absModel: "default",
+      reaModel: "default",
       contentSty: {
         width: "100%",
         height: "100%",

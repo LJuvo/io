@@ -56,6 +56,12 @@ export default new Router({
                 import ("../views/study/graphQ.vue")
         },
         {
+            path: "/editor",
+            name: "编辑器",
+            component: () =>
+                import ("../views/editor")
+        },
+        {
             path: "/svg",
             name: "SVG组件",
             component: () =>

@@ -57,6 +57,8 @@ export default {
         const graph = this.$refs.workspace.getGraph();
         this.$refs.toolbar.initGraph(graph);
         this.$refs.nav.initGraph(graph);
+
+        this.$refs.nav.initRes(null, true);
       });
     },
     initData(data, initResNav = true) {
@@ -65,13 +67,13 @@ export default {
         this.$refs.workspace.initData(this.data);
 
         if (initResNav) {
-          if (data.resourceClassId && data.parentId) {
-            this.fetchDrillRelateResClass({
-              resource_class_id: data.resourceClassId
-            });
-          } else {
-            this.$refs.nav.initRes(null, true); //放开左侧全部图标
-          }
+          // if (data.resourceClassId && data.parentId) {
+          //   this.fetchDrillRelateResClass({
+          //     resource_class_id: data.resourceClassId
+          //   });
+          // } else {
+          this.$refs.nav.initRes(null, true); //放开左侧全部图标
+          // }
         }
       }
     },

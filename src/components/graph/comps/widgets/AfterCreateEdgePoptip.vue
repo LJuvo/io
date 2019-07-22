@@ -1,6 +1,6 @@
 <template>
   <div class="acep" :style="style">
-    <div style="position: relative;">
+    <!-- <div style="position: relative;">
       <div>
         <h4>关联</h4>
       </div>
@@ -22,7 +22,7 @@
         size="small"
         style="position: absolute; top: 0; right: 0;"
       />
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -42,7 +42,7 @@ export default {
   },
   computed: {
     resClasses() {
-      return this.$store.state.resource.resClasses;
+      // return this.$store.state.resource.resClasses;
     }
   },
   methods: {
@@ -94,9 +94,7 @@ export default {
       this.relateNavs = [];
       this.$http({
         method: "GET",
-        url: `resource/v1/resource/resourceClassRelations/relations/${
-          resClass.id
-        }`
+        url: `resource/v1/resource/resourceClassRelations/relations/${resClass.id}`
       }).then(result => {
         this.relateNavs = _.reject(
           result.passiveResourceClasss,

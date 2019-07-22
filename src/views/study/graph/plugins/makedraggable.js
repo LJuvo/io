@@ -1,4 +1,4 @@
-import mxgraph from "../core/index.js";
+import mxgraph from "../index.js";
 const { mxDragSource, mxEvent, mxUtils, mxCell, mxGeometry, mxPoint } = mxgraph;
 
 function insert(graph, dom, target, x, y) {

@@ -7,7 +7,7 @@
     :closable="false"
     v-model="show"
   >
-    <div v-if="defaultLayerIsShow">
+    <!-- <div v-if="defaultLayerIsShow">
       <attritem required title="视图名称">
         <Input v-model="item.name"/>
       </attritem>
@@ -66,7 +66,7 @@
         <Button @click="showDeleteModal = false" style="margin-left: 8px">取消</Button>
         <Button type="error" @click="doDel">确定删除</Button>
       </div>
-    </Modal>
+    </Modal>-->
   </Drawer>
 </template>
 

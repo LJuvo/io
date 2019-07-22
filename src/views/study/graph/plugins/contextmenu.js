@@ -1,4 +1,4 @@
-import mxgraph from "../core/index.js";
+import mxgraph from "../index.js";
 const { mxEvent, mxUtils, mxKeyHandler } = mxgraph;
 
 const keyBinds = {

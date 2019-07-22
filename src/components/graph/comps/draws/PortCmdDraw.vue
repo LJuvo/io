@@ -9,7 +9,7 @@
     placement="right"
     :width="300"
   >
-    <attritem layout="h" title="指令类型">
+    <!-- <attritem layout="h" title="指令类型">
       <Select v-model="cmdType" @on-change="onCmdTypeChanged">
         <Option v-for="cmd in cmds" :key="cmd.name" :value="cmd.name">{{cmd.name}}</Option>
       </Select>
@@ -33,7 +33,7 @@
     <ButtonGroup style="width: 100%;">
       <Button style="width: 50%; margin: 12px 0;" type="primary" ghost @click="hide()">取消</Button>
       <Button style="width: 50%; margin: 12px 0;" type="primary" @click="save">保存</Button>
-    </ButtonGroup>
+    </ButtonGroup>-->
   </Drawer>
 </template>
 
@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     resClasses() {
-      return _.cloneDeep(this.$store.state.resource.resClasses);
+      // return _.cloneDeep(this.$store.state.resource.resClasses);
     }
   },
   methods: {
@@ -196,7 +196,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "~@/styles/theme";
+@primary-color : #0cbabd;
 
 .bind-item {
   padding: 5px 12px;

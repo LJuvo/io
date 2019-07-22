@@ -50,6 +50,12 @@ export default new Router({
                 import ("../views/Test/graphP")
         },
         {
+            path: "/study",
+            name: "MxGraph学习",
+            component: () =>
+                import ("../views/study/graphQ.vue")
+        },
+        {
             path: "/svg",
             name: "SVG组件",
             component: () =>

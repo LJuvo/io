@@ -182,7 +182,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "~@/styles/theme";
+@primary-color : #0cbabd;
 
 .bind-item {
   padding: 5px 12px;

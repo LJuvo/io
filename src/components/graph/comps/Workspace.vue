@@ -8,8 +8,8 @@
       @on-save="$emit('on-save', $event)"
       :graph="graph"
       :show="showInfo"
-    />-->
-    <!-- <VertexInfoDraw
+    />
+    <VertexInfoDraw
       v-if="infoType ==='vertex'"
       ref="vertexInfoDraw"
       :graph="graph"
@@ -44,9 +44,9 @@
       :item="item"
       @save-success="onSaveSuccess"
     />
-    <PortCmdDraw ref="portCmdDraw" :graph="graph"/>
-    <AfterCreateEdgePoptip ref="acep" :graph="graph" @add-vertex="afterEdgeAddVertex"/>
-    <LayerManager ref="layerManager" :graph="graph"/>-->
+    <PortCmdDraw ref="portCmdDraw" :graph="graph" />-->
+    <AfterCreateEdgePoptip ref="acep" :graph="graph" @add-vertex="afterEdgeAddVertex" />
+    <LayerManager ref="layerManager" :graph="graph" />
   </div>
 </template>
 
@@ -60,20 +60,20 @@ const { mxRubberband } = Graph;
 // import EdgeInfoDraw from "./draws/EdgeInfoDraw";
 // import InstanceKpiDraw from "./draws/InstanceKpiDraw";
 // import PortCmdDraw from "./draws/PortCmdDraw";
-// import AfterCreateEdgePoptip from "./widgets/AfterCreateEdgePoptip";
-// import LayerManager from "./widgets/LayerManager";
+import AfterCreateEdgePoptip from "./widgets/AfterCreateEdgePoptip";
+import LayerManager from "./widgets/LayerManager";
 export default {
   props: ["item"],
   components: {
-    // GraphInfoDraw
+    // GraphInfoDraw,
     // InstanceBindDraw,
     // InstanceEditDraw,
     // VertexInfoDraw,
     // EdgeInfoDraw,
     // InstanceKpiDraw,
     // PortCmdDraw,
-    // AfterCreateEdgePoptip,
-    // LayerManager
+    AfterCreateEdgePoptip,
+    LayerManager
   },
   data() {
     return {
@@ -133,7 +133,7 @@ export default {
 
       graph.addListener("click", this.onGraphClick);
 
-      // graph.addListener("addCells", this.onAddCells);
+      graph.addListener("addCells", this.onAddCells);
 
       // //实例绑定
       // graph.addListener("bindResourceInstance", this.onBindResourceInstance);
@@ -172,6 +172,7 @@ export default {
     },
 
     onAddCells(sender, evt) {
+      console.log("on add cell->");
       //假如不是默认层则不响应
       if (!this.graph.isDefaultLayerShow()) {
         this.infoType = "graph";
@@ -179,6 +180,7 @@ export default {
       }
 
       const cell = evt.properties.cells[0];
+      console.log("on add cell->", cell);
       if (cell.vertex) {
         if (cell.children) {
           //群组
@@ -218,6 +220,30 @@ export default {
     onGraphClick(sender, evt) {
       const cell = evt.getProperty("cell");
       console.log("TCL: onGraphClick -> cell", cell);
+
+      //假如不是默认层则不响应
+      if (!this.graph.isDefaultLayerShow()) {
+        this.infoType = "graph";
+        const isPort = _.get(cell, "data.isPort", false);
+      }
+
+      if (!cell) {
+        this.infoType = "graph";
+        console.log("graph");
+      } else if (cell.vertex) {
+        this.infoType = "vertex";
+        console.log("vertex");
+
+        // this.$nextTick(() => {
+        //   this.$refs.vertexInfoDraw.setItem(cell);
+        // });
+      } else if (cell.edge) {
+        this.infoType = "edge";
+        console.log("edge");
+        // this.$nextTick(() => {
+        //   this.$refs.edgeInfoDraw.setItem(cell);
+        // });
+      }
     },
 
     //cell绑定资源实例

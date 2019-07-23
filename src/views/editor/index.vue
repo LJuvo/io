@@ -1,57 +1,59 @@
 <template>
   <div class="basic-pane">
     <div class="basic-pane-bar">
-      <div class="bar-list">
-        <div class="bar-list-title">元素</div>
-        <div class="bar-list-pane">
-          <div class="bar-list-pane-item" v-for="(item,key) in iconList" :key="key">
-            <img :src="item.url" />
-          </div>
-        </div>
-      </div>
+      <nav-model ref="nav"></nav-model>
     </div>
     <div class="basic-pane-wrapper">
-      <div class="basic-pane-wrapper-tools">tools</div>
+      <div class="basic-pane-wrapper-tools">
+        <tools-model ref="tools"></tools-model>
+      </div>
       <div class="basic-pane-wrapper-content">
-        other
+        <work-space ref="workspace"></work-space>
         <div class="basic-pane-scale">
-          <div class="basic-pane-scale-set">
-            <div class="basic-pane-scale-set-btn">
-              <Icon size="22" type="md-remove" />
-            </div>
-            <span class="basic-pane-scale-set-num">60%</span>
-            <div class="basic-pane-scale-set-btn">
-              <Icon size="22" type="md-add" />
-            </div>
-            <span class="basic-pane-scale-set-ruler">参考线</span>
-          </div>
+          <scale-model></scale-model>
+        </div>
+        <div class="basic-pane-bird">
+          <bird-eye-model ref="birdeye"></bird-eye-model>
         </div>
       </div>
     </div>
-    <div class="basic-pane-nature">right</div>
+    <div class="basic-pane-nature">
+      <nature-model></nature-model>
+    </div>
   </div>
 </template>
 <script>
+import NavModel from "./comps/nav";
+import ToolsModel from "./comps/tools";
+import ScaleModel from "./comps/scale";
+import NatureModel from "./comps/nature";
+import WorkSpace from "./comps/workspace";
+import BirdEyeModel from "./comps/birdeye";
 export default {
   props: {},
-  components: {},
-  data() {
-    return {
-      iconList: [
-        { label: "bale0", url: "cuse/0.png" },
-        { label: "bale1", url: "cuse/1.png" },
-        { label: "bale2", url: "cuse/2.png" },
-        { label: "bale3", url: "cuse/3.png" },
-        { label: "bale4", url: "cuse/4.png" },
-        { label: "bale5", url: "cuse/5.png" },
-        { label: "bale6", url: "cuse/6.png" },
-        { label: "bale7", url: "cuse/7.png" }
-      ]
-    };
+  components: {
+    NavModel,
+    ToolsModel,
+    ScaleModel,
+    NatureModel,
+    WorkSpace,
+    BirdEyeModel
   },
-  mounted() {},
+  data() {
+    return {};
+  },
+  mounted() {
+    this.init();
+  },
   methods: {
-    init() {}
+    init() {
+      this.$nextTick(() => {
+        const graph = this.$refs.workspace.getGraph();
+        // this.$refs.toolbar.initGraph(graph);
+        this.$refs.nav.initGraph(graph);
+        this.$refs.birdeye.initGraph(graph);
+      });
+    }
   }
 };
 </script>
@@ -68,6 +70,7 @@ export default {
     width: 100%;
     height: 100%;
     background: #ffffff;
+    border-right: 1px solid #dddddd;
   }
   &-wrapper {
     width: 100%;
@@ -77,6 +80,8 @@ export default {
     &-tools {
       width: 100%;
       height: 50px;
+      background: #ffffff;
+      border-bottom: 1px solid #dddddd;
     }
     &-content {
       position: relative;
@@ -88,6 +93,7 @@ export default {
     width: 100%;
     height: 100%;
     background: #ffffff;
+    border-left: 1px solid #dddddd;
   }
   &-scale {
     box-sizing: border-box;
@@ -98,47 +104,11 @@ export default {
     transform: translate(-50%, 0);
     left: 50%;
     bottom: 16px;
-    &-set {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      color: #ffffff;
-      text-align: center;
-      height: 38px;
-      &-btn {
-        width: 32px;
-      }
-      &-num {
-        width: 64px;
-      }
-      &-ruler {
-        width: 64px;
-      }
-    }
   }
-}
-.bar-list {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  &-title {
-    font-size: 16px;
-    font-weight: 600;
-    padding: 10px;
-  }
-  &-pane {
-    width: 100%;
-    padding: 10px;
-    display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
-    &-item {
-      padding: 10px;
-      width: 100%;
-      img {
-        width: 100%;
-      }
-    }
+  &-bird {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
   }
 }
 </style>

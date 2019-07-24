@@ -89,6 +89,8 @@ export default graph => {
     graph.setConnectableEdges(true);
     graph.setDisconnectOnMove(false);
 
+    graph.setHtmlLabels(true);
+
     //group
     graph.recursiveResize = true;
 
@@ -184,14 +186,14 @@ export default graph => {
 
     mxVertexHandler.prototype.manageSizers = true;
 
-    //滚轮缩放
-    mxEvent.addMouseWheelListener(function(evt, up) {
-        if (up) {
-            graph.zoomIn();
-        } else {
-            graph.zoomOut();
-        }
+    // //滚轮缩放
+    // mxEvent.addMouseWheelListener(function(evt, up) {
+    //     if (up) {
+    //         graph.zoomIn();
+    //     } else {
+    //         graph.zoomOut();
+    //     }
 
-        mxEvent.consume(evt);
-    });
+    //     mxEvent.consume(evt);
+    // });
 };

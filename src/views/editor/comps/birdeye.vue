@@ -33,8 +33,8 @@ export default {
 .bird {
   width: 200px;
   // height: 200px;
-  // background: rgba(0, 0, 0, 0.7);
-  background: #ffffff;
+  background: rgba(0, 0, 0, 0.3);
+  // background: #ffffff;
 }
 </style>
 

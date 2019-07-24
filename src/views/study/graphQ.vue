@@ -1,11 +1,29 @@
 <template>
   <div class="basic-pane">
-    <div class="graphbox"></div>
+    <div class="basic-pane-left bar"></div>
+    <div class="basic-pane-center">
+      <div class="workspace"></div>
+    </div>
+    <div class="basic-pane-right">
+      <div class="nature">
+        <div class="nature-title">图层</div>
+        <div class="nature-content">
+          <div
+            class="nature-content-item"
+            v-for="(item,key) in layerArr"
+            :key="key"
+            @click="onClickLayer(key)"
+          >{{item.label}}</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
+import Graph from "../editor/graph/EditGraph";
+
 import mxgraph from "./graph/";
-import Graph from "./graph/graph";
+// import Graph from "./graph/graph";
 const {
   mxOutline,
   mxUtils,
@@ -30,102 +48,119 @@ export default {
   props: {},
   components: {},
   data() {
-    return {};
+    return {
+      graph: null,
+      imgList: [
+        { label: "bale6", url: "imgs/toolbar/back.svg" },
+        { label: "bale5", url: "imgs/toolbar/bgimg.svg" },
+        { label: "bale4", url: "imgs/toolbar/clear.svg" },
+        { label: "bale3", url: "imgs/toolbar/draw.svg" },
+        { label: "bale2", url: "imgs/toolbar/help.svg" },
+        { label: "bale1", url: "imgs/toolbar/move.svg" }
+      ],
+      layerArr: [],
+      checkedLayer: null
+    };
   },
   mounted() {
-    // const container = document.querySelector(".graphbox");
-    // var graph = new Graph(container);
-    // var parent = graph.getDefaultParent();
-    // Adds cells to the model in a single step
+    const container = document.querySelector(".workspace");
+    const graph = (this.graph = new Graph(container));
+    this.$nextTick(() => graph.setBgImg("imgs/25F.svg"));
 
-    mxConnectionHandler.prototype.connectImage = new mxImage(
-      "imgs/graph/connector.gif",
-      16,
-      16
-    );
-    // Creates the div for the toolbar
-    var tbContainer = document.createElement("div");
-    tbContainer.style.position = "absolute";
-    tbContainer.style.overflow = "hidden";
-    tbContainer.style.padding = "2px";
-    tbContainer.style.left = "0px";
-    tbContainer.style.top = "0px";
-    tbContainer.style.width = "24px";
-    tbContainer.style.bottom = "0px";
+    var parent = graph.getDefaultParent();
+    console.log(parent, graph);
 
-    document.body.appendChild(tbContainer);
+    this.initLayer(parent, graph);
+    this.initNav();
+  },
+  methods: {
+    initLayer(parent, graph) {
+      var layer0 = parent.insert(new mxCell());
+      var layer1 = parent.insert(new mxCell());
+      this.layerArr = [
+        { label: "layer00", cell: layer0 },
+        { label: "layer01", cell: layer1 }
+      ];
 
-    // Creates new toolbar without event processing
-    var toolbar = new mxToolbar(tbContainer);
-    toolbar.enabled = false;
+      var v1 = graph.insertVertex(
+        layer1,
+        null,
+        "Hello,",
+        20,
+        20,
+        80,
+        30,
+        "fillColor=#C0C0C0"
+      );
+      var v2 = graph.insertVertex(
+        layer1,
+        null,
+        "Hello12",
+        200,
+        20,
+        80,
+        30,
+        "fillColor=#C0C0C0"
+      );
+      var v3 = graph.insertVertex(layer0, null, "World!", 110, 150, 80, 30);
+    },
+    onClickLayer(index) {
+      // let parent = this.graph.model;
+      // parent.setVisible(cellLayer, !parent.isVisible(cellLayer));
 
-    // Creates the div for the graph
-    var container = document.createElement("div");
-    container.style.position = "absolute";
-    container.style.overflow = "hidden";
-    container.style.left = "24px";
-    container.style.top = "0px";
-    container.style.right = "0px";
-    container.style.bottom = "0px";
-    container.style.background = 'url("imgs/graph/grid.gif")';
+      let cellLayer = this.layerArr[index].cell;
+      console.log(cellLayer);
+      let parent = this.graph.model;
+      // let parent = this.graph.getDefaultParent();
+      // console.log(parent.isVisible(cellLayer), parent.isVisible(cellLayer));
+      // parent.setVisible(cellLayer, !parent.isVisible(cellLayer));
 
-    document.body.appendChild(container);
+      // this.checkedLayer = cellLayer;
+      let cells = this.graph.getDefaultParent().children;
+      // console.log(cellLayer, parent, parent.isVisible(cellLayer), cells);
+      cells.forEach(cell => {
+        //   //   // console.log(cell.mxObjectId, cellLayer.mxObjectId);
+        if (cell.mxObjectId == cellLayer.mxObjectId) {
+          //     //     parent.setVisible(cell, !parent.isVisible(cell));
+          // console.log(parent.isVisible(cellLayer));
+          parent.setVisible(cell, !parent.isVisible(cell));
 
-    // Workaround for Internet Explorer ignoring certain styles
-    if (mxClient.IS_QUIRKS) {
-      document.body.style.overflow = "hidden";
-      new mxDivResizer(tbContainer);
-      new mxDivResizer(container);
-    }
+          this.graph.getDefaultParent().children.forEach(cell => {
+            if (cell.mxObjectId == cellLayer.mxObjectId) {
+              this.layerArr[index].cell = cell;
+            }
+          });
+        }
+      });
+    },
+    initNav() {
+      this.graph.makedraggable();
 
-    // Creates the model and the graph inside the container
-    // using the fastest rendering available on the browser
-    var model = new mxGraphModel();
-    var graph = new mxGraph(container, model);
+      var tbContainer = document.createElement("div");
+      document.querySelector(".bar").appendChild(tbContainer);
+      this.toolbar = new mxToolbar(tbContainer);
+      this.toolbar.enabled = false;
 
-    // Enables new connections in the graph
-    graph.setConnectable(true);
-    graph.setMultigraph(false);
+      this.addVertex(
+        "imgs/graph/actor.gif",
+        40,
+        40,
+        "shape=image;image=imgs/graph/actor.gif;"
+      );
 
-    // Stops editing on enter or escape keypress
-    var keyHandler = new mxKeyHandler(graph);
-    new mxRubberband(graph);
-
-    var addVertex = function(icon, w, h, style) {
+      this.imgList.forEach(ele => {
+        this.addVertex(ele.url, 100, 100, "shape=image;image=" + ele.url + ";");
+      });
+    },
+    addVertex(icon, w, h, style) {
       var vertex = new mxCell(null, new mxGeometry(0, 0, w, h), style);
       vertex.setVertex(true);
 
-      var img = addToolbarItem(graph, toolbar, vertex, icon);
+      var img = this.addToolbarItem(this.graph, this.toolbar, vertex, icon);
       img.enabled = true;
-
-      graph.getSelectionModel().addListener(mxEvent.CHANGE, function() {
-        var tmp = graph.isSelectionEmpty();
-        mxUtils.setOpacity(img, tmp ? 100 : 20);
-        img.enabled = tmp;
-      });
-    };
-
-    addVertex("imgs/graph/rectangle.gif", 100, 40, "");
-    addVertex("imgs/graph/rounded.gif", 100, 40, "shape=rounded");
-    addVertex("imgs/graph/ellipse.gif", 40, 40, "shape=ellipse");
-    addVertex("imgs/graph/rhombus.gif", 40, 40, "shape=rhombus");
-    addVertex("imgs/graph/triangle.gif", 40, 40, "shape=triangle");
-    addVertex("imgs/graph/cylinder.gif", 40, 40, "shape=cylinder");
-    addVertex("imgs/graph/actor.gif", 30, 40, "shape=actor");
-
-    addVertex(
-      "imgs/graph/feng.png",
-      30,
-      40,
-      30,
-      40,
-      "shape=image;image='imgs/graph/feng.png';"
-    );
-
-    function addToolbarItem(graph, toolbar, prototype, image) {
-      // Function that is executed when the image is dropped on
-      // the graph. The cell argument points to the cell under
-      // the mousepointer if there is one.
+      img.connectable = true;
+    },
+    addToolbarItem(graph, toolbar, prototype, image) {
       var funct = function(graph, evt, cell, x, y) {
         graph.stopEditing(false);
 
@@ -143,15 +178,6 @@ export default {
         funct(graph, evt, cell, pt.x, pt.y);
       });
 
-      // Disables dragging if element is disabled. This is a workaround
-      // for wrong event order in IE. Following is a dummy listener that
-      // is invoked as the last listener in IE.
-      mxEvent.addListener(img, "mousedown", function(evt) {
-        // do nothing
-      });
-
-      // This listener is always called first before any other listener
-      // in all browsers.
       mxEvent.addListener(img, "mousedown", function(evt) {
         if (img.enabled == false) {
           mxEvent.consume(evt);
@@ -162,8 +188,7 @@ export default {
 
       return img;
     }
-  },
-  methods: {}
+  }
 };
 </script>
 <style lang='less' scoped>
@@ -171,7 +196,37 @@ export default {
   width: 100%;
   height: 100%;
   background: #ffffff;
-  overflow: hidden;
-  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 20% auto 20%;
+  &-left {
+    // display: grid;
+    // grid-template-columns: 20% 20% 20% 20% 20%;
+    box-shadow: 3px -2px 10px rgba(201, 201, 201, 0.349019607843137);
+  }
+  &-center {
+    width: 100%;
+    height: 100%;
+  }
+  &-right {
+    box-shadow: 3px 2px 10px rgba(201, 201, 201, 0.349019607843137);
+  }
+}
+.workspace {
+  width: 100%;
+  height: 100%;
+}
+.nature {
+  &-title {
+    padding: 10px;
+    font-size: 16px;
+    background: #efefef;
+  }
+  &-content {
+    &-item {
+      padding: 5px;
+      background: #ffffff;
+      border-bottom: 1px solid #efefef;
+    }
+  }
 }
 </style>

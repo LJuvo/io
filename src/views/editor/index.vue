@@ -64,7 +64,8 @@ export default {
   overflow: hidden;
   display: grid;
   grid-template-columns: 20% auto 20%;
-  background: #e7e8f1;
+  // background: #e7e8f1;
+  background: #ffffff;
 
   &-bar {
     width: 100%;

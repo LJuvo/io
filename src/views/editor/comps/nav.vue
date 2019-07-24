@@ -1,5 +1,10 @@
 <template>
   <div class="bar">
+    <div class="bar-add">
+      <div class="bar-add-btn">
+        <Icon size="30" type="ios-add" @click="createAddTool" />
+      </div>
+    </div>
     <!-- <div class="bar-list">
       <div class="bar-list-title">元素</div>
       <div class="bar-list-pane">
@@ -107,23 +112,42 @@ export default {
         this.addVertex(ele.url, 100, 100, "shape=image;image=" + ele.url + ";");
       });
     },
+    createAddTool() {
+      let _this = this;
+
+      if (!_this.graph.isSelectionEmpty()) {
+        var cells = _this.graph.getSelectionCells();
+        var bounds = _this.graph.getView().getBounds(cells);
+
+        var funct = function(graph, evt, cell) {
+          graph.stopEditing(false);
+
+          var pt = graph.getPointForEvent(evt);
+          var dx = pt.x - bounds.x;
+          var dy = pt.y - bounds.y;
+
+          graph.setSelectionCells(graph.importCells(cells, dx, dy, cell));
+        };
+
+        var img = _this.toolbar.addMode(null, "imgs/graph/cylinder.gif", funct);
+        mxUtils.makeDraggable(img, _this.graph, funct);
+      }
+    },
     addVertex(icon, w, h, style) {
       var vertex = new mxCell(null, new mxGeometry(0, 0, w, h), style);
       vertex.setVertex(true);
 
       var img = this.addToolbarItem(this.graph, this.toolbar, vertex, icon);
       img.enabled = true;
+      img.connectable = true;
 
-      this.graph.getSelectionModel().addListener(mxEvent.CHANGE, function() {
-        var tmp = this.graph.isSelectionEmpty();
-        mxUtils.setOpacity(img, tmp ? 100 : 20);
-        img.enabled = tmp;
-      });
+      // this.graph.getSelectionModel().addListener(mxEvent.CHANGE, function() {
+      //   var tmp = this.graph.isSelectionEmpty();
+      //   mxUtils.setOpacity(img, tmp ? 100 : 20);
+      //   img.enabled = tmp;
+      // });
     },
     addToolbarItem(graph, toolbar, prototype, image) {
-      // Function that is executed when the image is dropped on
-      // the graph. The cell argument points to the cell under
-      // the mousepointer if there is one.
       var funct = function(graph, evt, cell, x, y) {
         graph.stopEditing(false);
 
@@ -141,16 +165,6 @@ export default {
         funct(graph, evt, cell, pt.x, pt.y);
       });
 
-      // Disables dragging if element is disabled. This is a workaround
-      // for wrong event order in IE. Following is a dummy listener that
-      // is invoked as the last listener in IE.
-      mxEvent.addListener(img, "mousedown", function(evt) {
-        // do nothing
-        console.log("mousedown");
-      });
-
-      // This listener is always called first before any other listener
-      // in all browsers.
       mxEvent.addListener(img, "mousedown", function(evt) {
         if (img.enabled == false) {
           mxEvent.consume(evt);
@@ -169,6 +183,16 @@ export default {
 .bar {
   width: 100%;
   height: 100%;
+  &-add {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #efefef;
+    &-btn {
+      padding: 5px 20px;
+      border-radius: 50px;
+      background: #efefef;
+    }
+  }
   &-list {
     display: flex;
     flex-direction: column;

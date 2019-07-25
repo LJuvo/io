@@ -1,18 +1,48 @@
 <template>
   <div class="scale-set">
     <div class="scale-set-btn">
-      <Icon size="22" type="md-remove" />
+      <Icon size="22" type="md-remove" @click="onZoomOut" />
     </div>
-    <span class="scale-set-num">60%</span>
+    <span class="scale-set-num">{{spaceScale}}%</span>
     <div class="scale-set-btn">
-      <Icon size="22" type="md-add" />
+      <Icon size="22" type="md-add" @click="onZoomIn" />
     </div>
     <span class="scale-set-ruler">参考线</span>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      spaceScale: 100,
+      graph: null
+    };
+  },
+  watch: {
+    "graph.pageScale"(v) {
+      console.log(v);
+    },
+    "graph.view.scale"(v) {
+      console.log(v);
+    }
+  },
+  methods: {
+    initGraph(graph) {
+      this.graph = graph;
+      this.spaceScale = parseInt(this.graph.view.scale * 100);
+      // console.log(graph.pageScale, graph.view.scale);
+    },
+    onZoomIn() {
+      this.graph.zoomIn();
+      this.spaceScale = parseInt(this.graph.view.scale * 100);
+    },
+    onZoomOut() {
+      this.graph.zoomOut();
+      this.spaceScale = parseInt(this.graph.view.scale * 100);
+    }
+  }
+};
 </script>
 
 <style lang="less" scoped>

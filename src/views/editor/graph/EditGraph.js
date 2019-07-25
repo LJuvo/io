@@ -180,4 +180,8 @@ export default class EditGraph extends mxGraph {
             this.moveCells(this.getSelectionCells(), s, s, true)
         );
     }
+
+    resetView() {
+        this.view.scaleAndTranslate(1, 0, 0);
+    }
 }

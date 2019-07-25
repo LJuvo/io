@@ -10,7 +10,7 @@
       <div class="basic-pane-wrapper-content">
         <work-space ref="workspace"></work-space>
         <div class="basic-pane-scale">
-          <scale-model></scale-model>
+          <scale-model ref="scale"></scale-model>
         </div>
         <div class="basic-pane-bird">
           <bird-eye-model ref="birdeye"></bird-eye-model>
@@ -52,6 +52,7 @@ export default {
         // this.$refs.toolbar.initGraph(graph);
         this.$refs.nav.initGraph(graph);
         this.$refs.birdeye.initGraph(graph);
+        this.$refs.scale.initGraph(graph);
       });
     }
   }

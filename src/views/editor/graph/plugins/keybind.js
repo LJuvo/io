@@ -1,18 +1,17 @@
 import mxgraph from "../index";
 const { mxEvent, mxUtils, mxKeyHandler } = mxgraph;
 
-const keyBinds = [
-    { bindType: "bindKey", shortCut: "DELETE", shortCode: 8 },
-    { bindType: "bindKey", shortCut: "ENTER", shortCode: 13 }
-];
+
 
 let isBind = false;
+let keyHandler = null;
 //启用方向键移动选中元素
 const arrowMove = graph => {
     // if (isBind) return;
-    console.log("TCL: arrowMove");
+
     isBind = true;
-    var nudge = function(keyCode) {
+    var nudge = function(keyCode, ) {
+        graph.container.focus();
         if (!graph.isSelectionEmpty()) {
             var dx = 0;
             var dy = 0;
@@ -28,11 +27,13 @@ const arrowMove = graph => {
             }
 
             graph.moveCells(graph.getSelectionCells(), dx, dy);
+            graph.refresh()
+            console.log("TCL: arrowMove->", dx, dy);
         }
     };
 
     // Transfer initial focus to graph container for keystroke handling
-    graph.container.focus();
+
 
     // Handles keystroke events
     var keyHandler = new mxKeyHandler(graph);
@@ -58,6 +59,22 @@ const arrowMove = graph => {
     });
 };
 
+const deleteEnter = graph => {
+    const keyBinds = [{ bindType: "bindKey", shortCut: "DELETE", shortCode: 8, func: () => graph.deleteCells() },
+        { bindType: "bindKey", shortCut: "ENTER", shortCode: 13, func: () => graph.editCell() }
+    ]
+
+    keyBinds.forEach(ele => {
+        keyHandler[ele.bindType](ele.shortCode, ele.func);
+    })
+
+}
+
 export default graph => {
+    if (keyHandler) keyHandler.destroy();
+    keyHandler = new mxKeyHandler(graph);
+    graph.container.focus();
+
     arrowMove(graph);
+    deleteEnter(graph)
 };

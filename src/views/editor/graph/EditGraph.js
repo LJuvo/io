@@ -3,6 +3,7 @@ import defaultConfig from "./plugins/defaultConfig"
 import contextMenu from "./plugins/contextMenu"
 import connectionHandler from "./plugins/connectionHandler"
 import keybind from "./plugins/keybind"
+import clipboard from './plugins/clipboard';
 import undo from "./plugins/undo"
 import makeDraggable from "./plugins/makeDraggable"
 
@@ -33,6 +34,7 @@ export default class EditGraph extends mxGraph {
         contextMenu(this, true);
         connectionHandler(this);
         keybind(this)
+        clipboard(this)
 
         this.undoManager = undo(this);
     }
@@ -183,5 +185,16 @@ export default class EditGraph extends mxGraph {
 
     resetView() {
         this.view.scaleAndTranslate(1, 0, 0);
+    }
+
+    destory() {
+        if (!this.destroyed) {
+            this.destroyed = true;
+
+            this.container = null;
+
+
+            mxEvent.removeAllListeners(this)
+        }
     }
 }

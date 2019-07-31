@@ -91,15 +91,15 @@ export default {
 <style lang="less" scoped>
 .work-wrapper {
   width: 100%;
-  height: 100%;
-  padding: 20px;
+  height: calc(100vh - 50px);
+  // padding: 20px;
   overflow: hidden;
 }
 .workspace {
   width: 100%;
   height: 100%;
   border: 1px solid #efefef;
-  background: url("./grid.gif");
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDQgTCAxNiA0IE0gNCAwIEwgNCAxNiBNIDAgOCBMIDE2IDggTSA4IDAgTCA4IDE2IE0gMCAxMiBMIDE2IDEyIE0gMTIgMCBMIDEyIDE2IiBmaWxsPSJub25lIiBzdHJva2U9IiNlMGUwZTAiIG9wYWNpdHk9IjAuMiIgc3Ryb2tlLXdpZHRoPSIxIi8+PHBhdGggZD0iTSAxNiAwIEwgMCAwIDAgMTYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2UwZTBlMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+");
 }
 .work-btn {
   position: absolute;

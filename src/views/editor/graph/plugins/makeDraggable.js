@@ -11,8 +11,8 @@ function insert(graph, dom, target, x, y) {
     const type = dom.getAttribute("type");
     const isRegion = dom.getAttribute("isRegion");
 
-    // const imgSrc = dom.getAttribute("img") || "static/imgs/graph/default.svg";
-    const imgSrc = dom.getAttribute("img");
+    const imgSrc = dom.getAttribute("img") || "resource/general/cloud.svg";
+    // const imgSrc = dom.getAttribute("img");
     let shapeStyle = "rounded=1;whiteSpace=wrap;html=1;";
     if (!isRegion) {
         shapeStyle =
@@ -78,7 +78,7 @@ export default graph => {
         insert(graph, this.element, target, x, y);
     };
 
-    const eles = document.querySelectorAll(".nav-drag-item");
+    const eles = document.querySelectorAll(".bar-list-pane-item");
 
     Array.from(eles).forEach(ele => {
         const dragElt = document.createElement("div");

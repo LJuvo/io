@@ -21,10 +21,10 @@ export default {
   },
   watch: {
     "graph.pageScale"(v) {
-      console.log(v);
+      // console.log(v);
     },
     "graph.view.scale"(v) {
-      console.log(v);
+      // console.log(v);
     }
   },
   methods: {

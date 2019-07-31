@@ -5,7 +5,7 @@
         <Icon size="30" type="ios-add" @click="createAddTool" />
       </div>
     </div>
-    <!-- <div class="bar-list">
+    <div class="bar-list">
       <div class="bar-list-title">元素</div>
       <div class="bar-list-pane">
         <div
@@ -27,8 +27,29 @@
       </div>
     </div>
     <div class="bar-list">
+      <div class="bar-list-title">通用</div>
+      <div class="bar-list-pane">
+        <div v-for="(item,key) in general" :key="key">
+          <div
+            class="bar-list-pane-item"
+            style="height: 60px;"
+            :title="item.label"
+            v-bind="{width: item.width || 30,
+                 height: item.height || 30, 
+                 type: item.cellType || 'vertex', 
+                 itemType: item.type,
+                 img: item.img ? item.img : 'resource/general/cloud.svg',
+                 shapeStyle: item.shapeStyle,
+                 label: item.label}"
+          >
+            <img ref="dragImg" :src="`resource/general/${item.type}.svg`" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bar-list">
       <div id="imgBox"></div>
-    </div>-->
+    </div>
   </div>
 </template>
 
@@ -82,6 +103,155 @@ export default {
         { label: "bale6", url: "imgs/toolbar/draw.svg" },
         { label: "bale6", url: "imgs/toolbar/help.svg" },
         { label: "bale6", url: "imgs/toolbar/move.svg" }
+      ],
+      general: [
+        {
+          type: "rect",
+          label: "矩形",
+          width: 45,
+          height: 20,
+          shapeStyle: "rounded=0;whiteSpace=wrap;html=1;"
+        },
+        {
+          type: "roundRect",
+          label: "圆角矩形",
+          shapeStyle: "rounded=1;whiteSpace=wrap;html=1;",
+          width: 45,
+          height: 20
+        },
+        {
+          type: "square",
+          label: "正方形",
+          shapeStyle: "rounded=0;whiteSpace=wrap;html=1;aspect=fixed;",
+          width: 30,
+          height: 30
+        },
+        {
+          type: "hexagon",
+          label: "六边形",
+          shapeStyle:
+            "rounded=0;shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;",
+          width: 50,
+          height: 30
+        },
+        {
+          type: "triangle",
+          label: "三角形",
+          shapeStyle: "shape=triangle;rounded=0;whiteSpace=wrap;html=1;",
+          width: 30,
+          height: 30
+        },
+        {
+          type: "diamond",
+          label: "菱形",
+          shapeStyle: "rounded=0;shape=rhombus;whiteSpace=wrap;html=1;",
+          width: 50,
+          height: 40
+        },
+        {
+          type: "circle",
+          label: "圆形",
+          shapeStyle: "shape=ellipse;whiteSpace=wrap;html=1;aspect=fixed;",
+          width: 40,
+          height: 40
+        },
+        {
+          type: "ellipse",
+          label: "椭圆型",
+          shapeStyle: "shape=ellipse;whiteSpace=wrap;html=1;",
+          width: 50,
+          height: 30
+        },
+        {
+          type: "cube",
+          label: "长方体",
+          shapeStyle:
+            "shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;",
+          width: 50,
+          height: 50
+        },
+        {
+          type: "cylinder",
+          label: "圆柱体",
+          shapeStyle:
+            "shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;",
+          width: 30,
+          height: 50
+        },
+
+        {
+          type: "cloud",
+          label: "云型",
+          shapeStyle: "shape=ellipse;shape=cloud;whiteSpace=wrap;html=1;",
+          width: 50,
+          height: 30
+        },
+        {
+          type: "text",
+          label: "文本",
+          shapeStyle:
+            "text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;",
+          width: 30,
+          height: 30
+        },
+        {
+          type: "image",
+          label: "图片",
+          shapeStyle:
+            "shape=image;image=resource/general/image.svg;whiteSpace=wrap;html=1;align=center;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;",
+          width: 45,
+          height: 45
+        },
+        {
+          type: "link",
+          label: "双线",
+          cellType: "edge",
+          shapeStyle:
+            "shape=link;noLabel=1;startArrow=none;endArrow=none;rounded=0;curved=0;html=1;edgeStyle=straight;strokeWidth=2;",
+          width: 50,
+          height: 50
+        },
+        {
+          type: "line",
+          label: "实线",
+          cellType: "edge",
+          shapeStyle:
+            "shape=none;noLabel=1;rounded=0;curved=0;startArrow=none;endArrow=none;html=1;edgeStyle=straight;strokeWidth=2;",
+          width: 50,
+          height: 50
+        },
+        {
+          type: "curve",
+          label: "曲线",
+          cellType: "edge",
+          shapeStyle:
+            "shape=none;noLabel=1;rounded=0;curved=1;startArrow=none;endArrow=none;html=1;edgeStyle=straight;strokeWidth=2;",
+          width: 50,
+          height: 50
+        },
+        {
+          type: "dashed",
+          label: "虚线",
+          cellType: "edge",
+          shapeStyle:
+            "shape=none;noLabel=1;rounded=0;curved=0;startArrow=none;endArrow=none;dashed=1;html=1;edgeStyle=straight;strokeWidth=2;",
+          width: 50,
+          height: 50
+        },
+        {
+          type: "blank",
+          label: "占位",
+          shapeStyle: "fillColor=none;strokeColor=none;noLabel=1;",
+          width: 20,
+          height: 20
+        },
+        {
+          type: "image",
+          label: "图片",
+          shapeStyle: "shape=image;image=resource/general/image.svg;",
+          width: 20,
+          height: 20
+        }
       ]
     };
   },

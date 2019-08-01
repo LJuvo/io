@@ -253,7 +253,7 @@ export default {
 </style>
 <style>
 html {
-  background: url("../assets/img/bird.png") left top no-repeat;
+  /* background: url("../assets/img/bird.png") left top no-repeat; */
 }
 /* @media screen and (max-width: 650px) {
   html {

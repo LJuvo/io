@@ -48,11 +48,11 @@ export default {
   methods: {
     initGraph(graph) {
       this.graph = graph;
-      this.graph.preferPageSize = true;
+      // this.graph.preferPageSize = true;
 
-      this.graph.pageFormat.height -= this.headerSize + this.footerSize;
-      this.graph.graphHandler.scaleGrid = false;
-      this.graph.panningHandler.ignoreCell = true;
+      // this.graph.pageFormat.height -= this.headerSize + this.footerSize;
+      // this.graph.graphHandler.scaleGrid = false;
+      // this.graph.panningHandler.ignoreCell = true;
     },
     onPageSizeChange() {
       var pw = parseFloat(this.pageWidth);

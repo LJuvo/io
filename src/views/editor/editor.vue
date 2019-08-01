@@ -55,12 +55,7 @@ export default {
     init() {
       this.$nextTick(() => {
         this.graph = this.$refs.workspace.getGraph();
-        this.graph.scrollTileSize = new mxRectangle(
-          0,
-          0,
-          this.$refs.workspace.offsetWidth,
-          this.$refs.workspace.offsetHeight
-        );
+
         // this.$refs.toolbar.initGraph(graph);
         this.$refs.nav.initGraph(this.graph);
         this.$refs.birdeye.initGraph(this.graph);

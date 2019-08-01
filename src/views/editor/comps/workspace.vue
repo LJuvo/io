@@ -30,7 +30,8 @@ const {
   mxUtils,
   mxCodecRegistry,
   mxGraphModel,
-  mxConstants
+  mxConstants,
+  mxRectangle
 } = mxgraph;
 import * as d3 from "d3";
 export default {
@@ -57,6 +58,13 @@ export default {
     init() {
       const container = document.querySelector(".workspace");
       const graph = (this.graph = new Graph(container));
+
+      // this.graph.scrollTileSize = new mxRectangle(
+      //   0,
+      //   0,
+      //   container.offsetWidth,
+      //   container.offsetHeight
+      // );
 
       this.$nextTick(() => graph.setBgImg("imgs/25F.svg"));
 

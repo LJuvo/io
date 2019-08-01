@@ -7,6 +7,7 @@ import clipboard from './plugins/clipboard';
 import undo from "./plugins/undo"
 import makeDraggable from "./plugins/makeDraggable"
 import editorCanvas from "./plugins/editorCanvas"
+import backPage from "./plugins/backPage"
 
 const {
     mxGraph,
@@ -36,9 +37,9 @@ export default class EditGraph extends mxGraph {
         connectionHandler(this);
         keybind(this)
         clipboard(this)
+        backPage(this)
 
         // editorCanvas(this)
-
         this.undoManager = undo(this);
     }
 

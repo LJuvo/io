@@ -62,6 +62,12 @@ export default new Router({
                 import ("../views/editor")
         },
         {
+            path: "/pagetile",
+            name: "编辑器Tile",
+            component: () =>
+                import ("../views/pagetile")
+        },
+        {
             path: "/svg",
             name: "SVG组件",
             component: () =>

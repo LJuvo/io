@@ -29,6 +29,10 @@ export default graph => {
     // // Defines the guides to be 1 pixel (default)
     mxConstants.GUIDE_STROKEWIDTH = 1;
 
+    graph.pageVisible = true;
+    graph.pageBreaksVisible = true;
+    graph.preferPageSize = true;
+
     //   mxGraph.prototype.keepEdgesInBackground = true;
 
     // Creates the default style for vertices
@@ -186,14 +190,14 @@ export default graph => {
 
     mxVertexHandler.prototype.manageSizers = true;
 
-    // //滚轮缩放
-    // mxEvent.addMouseWheelListener(function(evt, up) {
-    //     if (up) {
-    //         graph.zoomIn();
-    //     } else {
-    //         graph.zoomOut();
-    //     }
+    //滚轮缩放
+    mxEvent.addMouseWheelListener(function(evt, up) {
+        if (up) {
+            graph.zoomIn();
+        } else {
+            graph.zoomOut();
+        }
 
-    //     mxEvent.consume(evt);
-    // });
+        mxEvent.consume(evt);
+    });
 };

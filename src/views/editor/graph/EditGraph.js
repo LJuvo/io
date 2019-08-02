@@ -1,12 +1,13 @@
 import mxgraph from "./index";
-import defaultConfig from "./plugins/defaultConfig"
-import contextMenu from "./plugins/contextMenu"
-import connectionHandler from "./plugins/connectionHandler"
-import keybind from "./plugins/keybind"
-import clipboard from './plugins/clipboard';
-import undo from "./plugins/undo"
-import makeDraggable from "./plugins/makeDraggable"
-import editorCanvas from "./plugins/editorCanvas"
+import defaultConfig from "./plugins/defaultConfig";
+import contextMenu from "./plugins/contextMenu";
+import connectionHandler from "./plugins/connectionHandler";
+import keybind from "./plugins/keybind";
+import clipboard from "./plugins/clipboard";
+import undo from "./plugins/undo";
+import makeDraggable from "./plugins/makeDraggable";
+import editorCanvas from "./plugins/editorCanvas";
+import backPage from "./plugins/backPage";
 
 const {
     mxGraph,
@@ -21,7 +22,7 @@ const {
     mxEventObject,
     mxCellHighlight,
     mxCellOverlay,
-    mxEvent,
+    mxEvent
 } = mxgraph;
 
 export default class EditGraph extends mxGraph {
@@ -34,8 +35,9 @@ export default class EditGraph extends mxGraph {
         defaultConfig(this);
         contextMenu(this, true);
         connectionHandler(this);
-        keybind(this)
-        clipboard(this)
+        keybind(this);
+        clipboard(this);
+        backPage(this);
 
         // editorCanvas(this)
 
@@ -196,8 +198,7 @@ export default class EditGraph extends mxGraph {
 
             this.container = null;
 
-
-            mxEvent.removeAllListeners(this)
+            mxEvent.removeAllListeners(this);
         }
     }
 }

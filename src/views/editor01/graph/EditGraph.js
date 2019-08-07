@@ -1,13 +1,14 @@
 import mxgraph from "./index";
-import defaultConfig from "./plugins/defaultConfig"
-import contextMenu from "./plugins/contextMenu"
-import connectionHandler from "./plugins/connectionHandler"
-import keybind from "./plugins/keybind"
-import clipboard from './plugins/clipboard';
-import undo from "./plugins/undo"
-import makeDraggable from "./plugins/makeDraggable"
-import editorCanvas from "./plugins/editorCanvas"
-import backPage from "./plugins/backPage"
+import defaultConfig from "./plugins/defaultConfig";
+import contextMenu from "./plugins/contextMenu";
+import connectionHandler from "./plugins/connectionHandler";
+import keybind from "./plugins/keybind";
+import clipboard from "./plugins/clipboard";
+import undo from "./plugins/undo";
+import makeDraggable from "./plugins/makeDraggable";
+import editorCanvas from "./plugins/editorCanvas";
+import backPage from "./plugins/backPage";
+import tilePage from "./plugins/tilePage"
 
 const {
     mxGraph,
@@ -22,7 +23,7 @@ const {
     mxEventObject,
     mxCellHighlight,
     mxCellOverlay,
-    mxEvent,
+    mxEvent
 } = mxgraph;
 
 export default class EditGraph extends mxGraph {
@@ -33,13 +34,18 @@ export default class EditGraph extends mxGraph {
 
     _init() {
         defaultConfig(this);
+        // backPage(this);
+
         contextMenu(this, true);
         connectionHandler(this);
-        keybind(this)
-        clipboard(this)
-        backPage(this)
+        keybind(this);
+        clipboard(this);
+
+        // tilePage(this)
+
 
         // editorCanvas(this)
+
         this.undoManager = undo(this);
     }
 
@@ -197,8 +203,7 @@ export default class EditGraph extends mxGraph {
 
             this.container = null;
 
-
-            mxEvent.removeAllListeners(this)
+            mxEvent.removeAllListeners(this);
         }
     }
 }

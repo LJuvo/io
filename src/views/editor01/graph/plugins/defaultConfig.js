@@ -23,32 +23,33 @@ export default graph => {
     new mxRubberband(graph);
 
     mxGraphHandler.prototype.guidesEnabled = true;
-    // // // Defines the guides to be red (default)
-    // mxConstants.GUIDE_CpageVisibleOLOR = "#FF0000";
+    // // Defines the guides to be red (default)
+    mxConstants.GUIDE_COLOR = "#FF0000";
+
+    // // Defines the guides to be 1 pixel (default)
+    mxConstants.GUIDE_STROKEWIDTH = 1;
+
     graph.pageVisible = true;
     graph.pageBreaksVisible = true;
     graph.preferPageSize = true;
 
-    // // // Defines the guides to be 1 pixel (default)
-    // mxConstants.GUIDE_STROKEWIDTH = 1;
+    //   mxGraph.prototype.keepEdgesInBackground = true;
 
-    // //   mxGraph.prototype.keepEdgesInBackground = true;
+    // Creates the default style for vertices
+    var style = [];
+    style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE;
+    style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
+    style[mxConstants.STYLE_STROKECOLOR] = primaryColor;
+    style[mxConstants.STYLE_ROUNDED] = true;
+    style[mxConstants.STYLE_FILLCOLOR] = primaryColor;
+    style[mxConstants.STYLE_GRADIENTCOLOR] = "#efefef";
+    style[mxConstants.STYLE_FONTCOLOR] = "#444";
+    style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
+    style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE;
+    style[mxConstants.STYLE_FONTSIZE] = "12";
+    style[mxConstants.STYLE_FONTSTYLE] = 1;
 
-    // // Creates the default style for vertices
-    // var style = [];
-    // style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE;
-    // style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
-    // style[mxConstants.STYLE_STROKECOLOR] = primaryColor;
-    // style[mxConstants.STYLE_ROUNDED] = true;
-    // style[mxConstants.STYLE_FILLCOLOR] = primaryColor;
-    // style[mxConstants.STYLE_GRADIENTCOLOR] = "#efefef";
-    // style[mxConstants.STYLE_FONTCOLOR] = "#444";
-    // style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
-    // style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE;
-    // style[mxConstants.STYLE_FONTSIZE] = "12";
-    // style[mxConstants.STYLE_FONTSTYLE] = 1;
-
-    // graph.getStylesheet().putDefaultVertexStyle(style);
+    graph.getStylesheet().putDefaultVertexStyle(style);
 
     //   //设备组合样式
     //   style = [];
@@ -80,28 +81,28 @@ export default graph => {
     //   style[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = "#b2dfdb";
     //   graph.getStylesheet().putDefaultEdgeStyle(style);
 
-    // graph.setConnectable(true);
-    // // 设置拖拽线的过程出现折线，默认为直线
-    // graph.connectionHandler.createEdgeState = () => {
-    //     const edge = graph.createEdge();
-    //     return new mxCellState(graph.view, edge, graph.getCellStyle(edge));
-    // };
-    // //auto navigate
-    // mxEdgeHandler.prototype.snapToTerminals = true;
+    graph.setConnectable(true);
+    // 设置拖拽线的过程出现折线，默认为直线
+    graph.connectionHandler.createEdgeState = () => {
+        const edge = graph.createEdge();
+        return new mxCellState(graph.view, edge, graph.getCellStyle(edge));
+    };
+    //auto navigate
+    mxEdgeHandler.prototype.snapToTerminals = true;
 
-    // graph.setConnectableEdges(true);
-    // graph.setDisconnectOnMove(false);
+    graph.setConnectableEdges(true);
+    graph.setDisconnectOnMove(false);
 
-    // graph.setHtmlLabels(true);
+    graph.setHtmlLabels(true);
 
-    // //group
-    // graph.recursiveResize = true;
+    //group
+    graph.recursiveResize = true;
 
-    // //拖拽元素时边框样式
-    // mxGraphHandler.prototype.previewColor = primaryColor;
+    //拖拽元素时边框样式
+    mxGraphHandler.prototype.previewColor = primaryColor;
 
-    // //缩放从中间开始
-    // graph.centerZoom = true;
+    //缩放从中间开始
+    graph.centerZoom = true;
 
     //可以拖拽
     graph.setPanning(true);

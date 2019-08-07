@@ -24,13 +24,13 @@ export default graph => {
 
     // Fits the number of background pages to the graph
     graph.view.getBackgroundPageBounds = function() {
-        var layout = graph.getPageLayout();
-        var page = graph.getPageSize();
+        var layout = this.graph.getPageLayout();
+        var page = this.graph.getPageSize();
 
-        return new mxRectangle(graph.view.scale * (graph.view.translate.x + layout.x * page.width),
-            graph.view.scale * (graph.view.translate.y + layout.y * page.height),
-            graph.view.scale * layout.width * page.width,
-            graph.view.scale * layout.height * page.height);
+        return new mxRectangle(this.scale * (this.translate.x + layout.x * page.width),
+            this.scale * (this.translate.y + layout.y * page.height),
+            this.scale * layout.width * page.width,
+            this.scale * layout.height * page.height);
     };
 
     graph.getPreferredPageSize = function(bounds, width, height) {
@@ -51,16 +51,16 @@ export default graph => {
      */
     var graphViewValidate = graph.view.validate;
     graph.view.validate = function() {
-        if (graph.container != null && mxUtils.hasScrollbars(graph.container)) {
-            var pad = graph.getPagePadding();
-            var size = graph.getPageSize();
+        if (this.graph.container != null && mxUtils.hasScrollbars(this.graph.container)) {
+            var pad = this.graph.getPagePadding();
+            var size = this.graph.getPageSize();
 
             // Updating scrollbars here causes flickering in quirks and is not needed
             // if zoom method is always used to set the current scale on the graph.
-            var tx = graph.view.translate.x;
-            var ty = graph.view.translate.y;
-            graph.view.translate.x = pad.x - (this.x0 || 0) * size.width;
-            graph.view.translate.y = pad.y - (this.y0 || 0) * size.height;
+            var tx = this.translate.x;
+            var ty = this.translate.y;
+            this.translate.x = pad.x - (this.x0 || 0) * size.width;
+            this.translate.y = pad.y - (this.y0 || 0) * size.height;
         }
 
         graphViewValidate.apply(this, arguments);

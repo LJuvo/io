@@ -259,27 +259,28 @@ export default {
   methods: {
     initGraph(graph) {
       this.graph = graph;
+      this.graph.makedraggable();
 
-      // var tbContainer = document.createElement("div");
-      // document.querySelector(".bar").appendChild(tbContainer);
-      // this.toolbar = new mxToolbar(tbContainer);
-      // this.toolbar.enabled = false;
+      var tbContainer = document.createElement("div");
+      document.querySelector(".bar").appendChild(tbContainer);
+      this.toolbar = new mxToolbar(tbContainer);
+      this.toolbar.enabled = false;
 
-      // this.addVertex("imgs/graph/feng.svg", 100, 40, "");
-      // this.addVertex("imgs/graph/feng.svg", 100, 40, "shape=rounded");
-      // this.addVertex("imgs/graph/feng.svg", 40, 40, "shape=ellipse");
-      // this.addVertex("imgs/graph/feng.svg", 40, 40, "shape=rhombus");
-      // this.addVertex("imgs/graph/feng.svg", 40, 40, "shape=triangle");
-      // this.addVertex(
-      //   "imgs/graph/actor.gif",
-      //   40,
-      //   40,
-      //   "shape=image;image=imgs/graph/actor.gif;"
-      // );
+      this.addVertex("imgs/graph/feng.svg", 100, 40, "");
+      this.addVertex("imgs/graph/feng.svg", 100, 40, "shape=rounded");
+      this.addVertex("imgs/graph/feng.svg", 40, 40, "shape=ellipse");
+      this.addVertex("imgs/graph/feng.svg", 40, 40, "shape=rhombus");
+      this.addVertex("imgs/graph/feng.svg", 40, 40, "shape=triangle");
+      this.addVertex(
+        "imgs/graph/actor.gif",
+        40,
+        40,
+        "shape=image;image=imgs/graph/actor.gif;"
+      );
 
-      // this.imgList.forEach(ele => {
-      //   this.addVertex(ele.url, 100, 100, "shape=image;image=" + ele.url + ";");
-      // });
+      this.imgList.forEach(ele => {
+        this.addVertex(ele.url, 100, 100, "shape=image;image=" + ele.url + ";");
+      });
     },
     createAddTool() {
       let _this = this;
@@ -301,50 +302,49 @@ export default {
         var img = _this.toolbar.addMode(null, "imgs/graph/cylinder.gif", funct);
         mxUtils.makeDraggable(img, _this.graph, funct);
       }
+    },
+    addVertex(icon, w, h, style) {
+      var vertex = new mxCell(null, new mxGeometry(0, 0, w, h), style);
+      vertex.setVertex(true);
+
+      var img = this.addToolbarItem(this.graph, this.toolbar, vertex, icon);
+      img.enabled = true;
+      img.connectable = true;
+
+      // this.graph.getSelectionModel().addListener(mxEvent.CHANGE, function() {
+      //   var tmp = this.graph.isSelectionEmpty();
+      //   mxUtils.setOpacity(img, tmp ? 100 : 20);
+      //   img.enabled = tmp;
+      // });
+    },
+    addToolbarItem(graph, toolbar, prototype, image) {
+      var funct = function(graph, evt, cell, x, y) {
+        graph.stopEditing(false);
+
+        var vertex = graph.getModel().cloneCell(prototype);
+        vertex.geometry.x = x;
+        vertex.geometry.y = y;
+
+        graph.addCell(vertex);
+        graph.setSelectionCell(vertex);
+      };
+
+      // Creates the image which is used as the drag icon (preview)
+      var img = toolbar.addMode(null, image, function(evt, cell) {
+        var pt = this.graph.getPointForEvent(evt);
+        funct(graph, evt, cell, pt.x, pt.y);
+      });
+
+      mxEvent.addListener(img, "mousedown", function(evt) {
+        if (img.enabled == false) {
+          mxEvent.consume(evt);
+        }
+      });
+
+      mxUtils.makeDraggable(img, graph, funct);
+
+      return img;
     }
-    // addVertex(icon, w, h, style) {
-    //   var vertex = new mxCell(null, new mxGeometry(0, 0, w, h), style);
-    //   vertex.setVertex(true);
-
-    //   var img = this.addToolbarItem(this.graph, this.toolbar, vertex, icon);
-    //   img.enabled = true;
-    //   img.connectable = true;
-
-    //   // this.graph.getSelectionModel().addListener(mxEvent.CHANGE, function() {
-    //   //   var tmp = this.graph.isSelectionEmpty();
-    //   //   mxUtils.setOpacity(img, tmp ? 100 : 20);
-    //   //   img.enabled = tmp;
-    //   // });
-    // },
-    // addToolbarItem(graph, toolbar, prototype, image) {
-    //   var funct = function(graph, evt, cell, x, y) {
-    //     console.log("hell");
-    //     graph.stopEditing(false);
-
-    //     var vertex = graph.getModel().cloneCell(prototype);
-    //     vertex.geometry.x = x;
-    //     vertex.geometry.y = y;
-
-    //     graph.addCell(vertex);
-    //     graph.setSelectionCell(vertex);
-    //   };
-
-    //   // Creates the image which is used as the drag icon (preview)
-    //   var img = toolbar.addMode(null, image, function(evt, cell) {
-    //     var pt = this.graph.getPointForEvent(evt);
-    //     funct(graph, evt, cell, pt.x, pt.y);
-    //   });
-
-    //   mxEvent.addListener(img, "mousedown", function(evt) {
-    //     if (img.enabled == false) {
-    //       mxEvent.consume(evt);
-    //     }
-    //   });
-
-    //   mxUtils.makeDraggable(img, graph.view.backgroundPageShape.node, funct);
-
-    //   return img;
-    // }
   }
 };
 </script>

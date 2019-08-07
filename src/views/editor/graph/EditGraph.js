@@ -8,6 +8,7 @@ import undo from "./plugins/undo";
 import makeDraggable from "./plugins/makeDraggable";
 import editorCanvas from "./plugins/editorCanvas";
 import backPage from "./plugins/backPage";
+import tilePage from "./plugins/tilePage"
 
 const {
     mxGraph,
@@ -33,11 +34,15 @@ export default class EditGraph extends mxGraph {
 
     _init() {
         defaultConfig(this);
+        // backPage(this);
+        tilePage(this)
         contextMenu(this, true);
         connectionHandler(this);
         keybind(this);
         clipboard(this);
-        backPage(this);
+
+
+
 
         // editorCanvas(this)
 

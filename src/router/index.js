@@ -53,19 +53,13 @@ export default new Router({
             path: "/study",
             name: "MxGraph学习",
             component: () =>
-                import ("../views/study/graphQ.vue")
+                import ("../views/study/graphP.vue")
         },
         {
             path: "/editor",
             name: "编辑器",
             component: () =>
                 import ("../views/editor")
-        },
-        {
-            path: "/pagetile",
-            name: "编辑器Tile",
-            component: () =>
-                import ("../views/pagetile")
         },
         {
             path: "/svg",

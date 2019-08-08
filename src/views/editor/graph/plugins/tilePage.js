@@ -23,8 +23,7 @@ const getBackgroundPageBounds = graph => {
 
     // Computes unscaled, untranslated graph bounds
     var x = gb.width > 0 ? gb.x / graph.view.scale - graph.view.translate.x : 0;
-    var y =
-        gb.height > 0 ? gb.y / graph.view.scale - graph.view.translate.y : 0;
+    var y = gb.height > 0 ? gb.y / graph.view.scale - graph.view.translate.y : 0;
     var w = gb.width / graph.view.scale;
     var h = gb.height / graph.view.scale;
 
@@ -111,16 +110,16 @@ const validateBackgroundStyles = graph => {
         graph.view.backgroundPageShape.node.style.backgroundPosition = position;
         graph.view.backgroundPageShape.node.style.backgroundImage = image;
         graph.view.backgroundPageShape.node.style.backgroundColor = color;
-        graph.container.className = "geDiagramContainer geDiagramBackdrop";
+        // graph.container.className = "geDiagramContainer geDiagramBackdrop";
         canvas.style.backgroundImage = "none";
         canvas.style.backgroundColor = "";
     } else {
-        graph.container.className = "geDiagramContainer";
+        // graph.container.className = "geDiagramContainer";
         canvas.style.backgroundPosition = position;
         canvas.style.backgroundColor = color;
         canvas.style.backgroundImage = image;
     }
-}
+};
 const createSvgGrid = (color, graph) => {
     var tmp = graph.gridSize * graph.view.scale;
 
@@ -183,122 +182,142 @@ const createSvgGrid = (color, graph) => {
 
     return svg;
 };
+const clearPageShape = graph => {
+    graph.view.backgroundPageShape.destroy();
+    graph.view.backgroundPageShape = null;
+};
+
 export default graph => {
+    graph.panningHandler.ignoreCell = true;
+    graph.scrollTileSize = new mxRectangle(0, 0, 400, 400);
+    graph.getPagePadding = function() {
+        return new mxPoint(
+            Math.max(0, Math.round(graph.container.offsetWidth - 34)),
+            Math.max(0, Math.round(graph.container.offsetHeight - 34))
+        );
+    };
+    graph.getPageSize = function() {
+        return this.pageVisible ?
+            new mxRectangle(
+                0,
+                0,
+                this.pageFormat.width * this.pageScale,
+                this.pageFormat.height * this.pageScale
+            ) :
+            this.scrollTileSize;
+    };
+    graph.getPageLayout = function() {
+        var size = this.pageVisible ? this.getPageSize() : this.scrollTileSize;
+        var bounds = this.getGraphBounds();
+
+        if (bounds.width == 0 || bounds.height == 0) {
+            return new mxRectangle(0, 0, 1, 1);
+        } else {
+            // Computes untransformed graph bounds
+            var x = Math.ceil(bounds.x / this.view.scale - this.view.translate.x);
+            var y = Math.ceil(bounds.y / this.view.scale - this.view.translate.y);
+            var w = Math.floor(bounds.width / this.view.scale);
+            var h = Math.floor(bounds.height / this.view.scale);
+
+            var x0 = Math.floor(x / size.width);
+            var y0 = Math.floor(y / size.height);
+            var w0 = Math.ceil((x + w) / size.width) - x0;
+            var h0 = Math.ceil((y + h) / size.height) - y0;
+
+            return new mxRectangle(x0, y0, w0, h0);
+        }
+    };
 
     graph.view.validateBackgroundPage = function() {
-        console.log("here back ground ->");
         // if (graph.container != null && !graph.transparentBackground) {
-        //     if (graph.pageVisible) {
-        //         var bounds = getBackgroundPageBounds(graph);
+        if (graph.pageVisible) {
+            var bounds = getBackgroundPageBounds(graph);
+            if (graph.view.backgroundPageShape == null) {
+                // Finds first element in graph container
+                var firstChild = graph.container.firstChild;
+                while (
+                    firstChild != null &&
+                    firstChild.nodeType != mxConstants.NODETYPE_ELEMENT
+                ) {
+                    firstChild = firstChild.nextSibling;
+                }
+                if (firstChild != null) {
+                    graph.view.backgroundPageShape = new mxRectangleShape(
+                        getBackgroundPageBounds(graph),
+                        "#ffffff",
+                        graph.defaultPageBorderColor
+                    );
+                    graph.view.backgroundPageShape.scale = 1;
+                    graph.view.backgroundPageShape.dialect =
+                        mxConstants.DIALECT_STRICTHTML;
+                    graph.view.backgroundPageShape.init(graph.container);
+                    firstChild.style.position = "absolute";
+                    graph.container.insertBefore(
+                        graph.view.backgroundPageShape.node,
+                        firstChild
+                    );
+                    graph.view.backgroundPageShape.redraw();
+                    graph.view.backgroundPageShape.node.className = "geBackgroundPage";
 
-        //         if (graph.view.backgroundPageShape == null) {
-        //             // Finds first element in graph container
-        //             var firstChild = graph.container.firstChild;
+                    mxEvent.addListener(
+                        graph.view.backgroundPageShape.node,
+                        "dblclick",
+                        mxUtils.bind(this, function(evt) {
+                            graph.dblClick(evt);
+                        })
+                    );
+                    mxEvent.addGestureListeners(
+                        graph.view.backgroundPageShape.node,
+                        mxUtils.bind(this, function(evt) {
+                            graph.fireMouseEvent(mxEvent.MOUSE_DOWN, new mxMouseEvent(evt));
+                        }),
+                        mxUtils.bind(this, function(evt) {
+                            // Hides the tooltip if mouse is outside container
+                            if (
+                                graph.tooltipHandler != null &&
+                                graph.tooltipHandler.isHideOnHover()
+                            ) {
+                                graph.tooltipHandler.hide();
+                            }
 
-        //             while (
-        //                 firstChild != null &&
-        //                 firstChild.nodeType != mxConstants.NODETYPE_ELEMENT
-        //             ) {
-        //                 firstChild = firstChild.nextSibling;
-        //             }
+                            if (graph.isMouseDown && !mxEvent.isConsumed(evt)) {
+                                graph.fireMouseEvent(mxEvent.MOUSE_MOVE, new mxMouseEvent(evt));
+                            }
+                        }),
+                        mxUtils.bind(this, function(evt) {
+                            graph.fireMouseEvent(mxEvent.MOUSE_UP, new mxMouseEvent(evt));
+                        })
+                    );
+                } else {
+                    graph.view.backgroundPageShape.scale = 1;
+                    graph.view.backgroundPageShape.bounds = bounds;
+                    graph.view.backgroundPageShape.redraw();
+                }
+            } else {
+                graph.view.backgroundPageShape.scale = 1;
+                graph.view.backgroundPageShape.bounds = bounds;
+                graph.view.backgroundPageShape.redraw();
+            }
+        } else if (graph.view.backgroundPageShape != null) {
+            graph.view.backgroundPageShape.destroy();
+            graph.view.backgroundPageShape = null;
+        }
 
-        //             if (firstChild != null) {
-        //                 graph.view.backgroundPageShape = new mxRectangleShape(
-        //                     getBackgroundPageBounds(graph),
-        //                     "#ffffff",
-        //                     graph.defaultPageBorderColor
-        //                 );
-        //                 graph.view.backgroundPageShape.scale = 1;
+        validateBackgroundStyles(graph);
+    };
 
-        //                 // Shadow filter causes problems in outline window in quirks mode. IE8 standards
-        //                 // also has known rendering issues inside mxWindow but not using shadow is worse.
-        //                 graph.view.backgroundPageShape.isShadow = !mxgraph.IS_QUIRKS;
-        //                 graph.view.backgroundPageShape.dialect =
-        //                     mxConstants.DIALECT_STRICTHTML;
-        //                 graph.view.backgroundPageShape.init(graph.container);
+    // Add panning for background page in VML
+    var graphPanGraph = graph.panGraph;
+    graph.panGraph = function(dx, dy) {
+        graphPanGraph.apply(this, arguments);
 
-        //                 // Required for the browser to render the background page in correct order
-        //                 firstChild.style.position = "absolute";
-        //                 // firstChild.style['z-index'] = 10;
-        //                 graph.container.insertBefore(
-        //                     // graph.container.appendChild(
-        //                     graph.view.backgroundPageShape.node,
-        //                     firstChild
-        //                 );
-        //                 graph.view.backgroundPageShape.redraw();
-
-        //                 graph.view.backgroundPageShape.node.className = "geBackgroundPage";
-        //                 // graph.view.backgroundPageShape.node.style['z-index'] = 5;
-
-        //                 // // console.log("now to add eventlistener", graph.view.backgroundPageShape);
-        //                 // mxEvent.addListener(graph.view.backgroundPageShape.node, "mousedown", function(evt) {
-        //                 //     console.log("mousedown");
-
-        //                 // });
-
-
-        //                 // // Adds listener for double click handling on background
-        //                 // mxEvent.addListener(
-        //                 //     graph.view.backgroundPageShape,
-        //                 //     "dblclick",
-        //                 //     mxUtils.bind(this, function(evt) {
-        //                 //         // graph.dblClick(evt);
-        //                 //         console.log("dbclick ->");
-        //                 //     })
-        //                 // );
-
-        //                 // mxEvent.addListener(
-        //                 //     graph.view.backgroundPageShape,
-        //                 //     "click",
-        //                 //     mxUtils.bind(this, function(evt) {
-        //                 //         // graph.dblClick(evt);
-        //                 //         console.log("click ->");
-        //                 //     })
-        //                 // );
-
-        //                 // // // Adds basic listeners for graph event dispatching outside of the
-        //                 // // // container and finishing the handling of a single gesture
-        //                 // mxEvent.addGestureListeners(
-        //                 //     graph.view.backgroundPageShape.node,
-        //                 //     mxUtils.bind(this, function(evt) {
-        //                 //         console.log("click on here ->");
-        //                 //         graph.fireMouseEvent(mxEvent.MOUSE_DOWN, new mxMouseEvent(evt));
-        //                 //     }),
-        //                 //     //     // mxUtils.bind(this, function(evt) {
-        //                 //     //     //     // Hides the tooltip if mouse is outside container
-        //                 //     //     //     if (
-        //                 //     //     //         graph.tooltipHandler != null &&
-        //                 //     //     //         graph.tooltipHandler.isHideOnHover()
-        //                 //     //     //     ) {
-        //                 //     //     //         graph.tooltipHandler.hide();
-        //                 //     //     //     }
-
-        //                 //     //     //     if (graph.isMouseDown && !mxEvent.isConsumed(evt)) {
-        //                 //     //     //         graph.fireMouseEvent(
-        //                 //     //     //             mxEvent.MOUSE_MOVE,
-        //                 //     //     //             new mxMouseEvent(evt)
-        //                 //     //     //         );
-        //                 //     //     //     }
-        //                 //     //     // }),
-        //                 //     //     // mxUtils.bind(this, function(evt) {
-        //                 //     //     //     graph.fireMouseEvent(mxEvent.MOUSE_UP, new mxMouseEvent(evt));
-        //                 //     //     // })
-        //                 // );
-        //             }
-        //         } else {
-        //             graph.view.backgroundPageShape.scale = 1;
-        //             graph.view.backgroundPageShape.bounds = bounds;
-        //             graph.view.backgroundPageShape.redraw();
-        //         }
-        //     } else if (graph.view.backgroundPageShape != null) {
-        //         graph.view.backgroundPageShape.destroy();
-        //         graph.view.backgroundPageShape = null;
-        //     }
-
-        //     // graph.view.validateBackgroundStyles();
-        //     validateBackgroundStyles(graph)
-        // }
-    }
-
-
-}
+        if (
+            this.dialect != mxConstants.DIALECT_SVG &&
+            this.view.backgroundPageShape != null &&
+            (!this.useScrollbarsForPanning || !mxUtils.hasScrollbars(this.container))
+        ) {
+            this.view.backgroundPageShape.node.style.marginLeft = dx + "px";
+            this.view.backgroundPageShape.node.style.marginTop = dy + "px";
+        }
+    };
+};

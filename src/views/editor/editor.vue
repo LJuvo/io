@@ -1,28 +1,34 @@
 <template>
-  <div class="basic-pane">
-    <div class="basic-pane-bar">
-      <nav-model ref="nav"></nav-model>
+  <div class="editor">
+    <div class="basic-menu">
+      <tools-model ref="tools"></tools-model>
     </div>
-    <div class="basic-pane-wrapper">
-      <div class="basic-pane-wrapper-tools">
-        <tools-model ref="tools"></tools-model>
+
+    <div class="basic-pane">
+      <div class="basic-pane-bar">
+        <nav-model ref="nav"></nav-model>
       </div>
-      <div class="basic-pane-wrapper-content">
-        <work-space ref="workspace"></work-space>
-        <div class="basic-pane-scale">
-          <scale-model ref="scale"></scale-model>
+      <div class="basic-pane-wrapper">
+        <div class="basic-pane-wrapper-tools">
+          <tools-model ref="tools"></tools-model>
         </div>
-        <div class="basic-pane-bird">
-          <bird-eye-model ref="birdeye"></bird-eye-model>
+        <div class="basic-pane-wrapper-content">
+          <work-space ref="workspace"></work-space>
+          <div class="basic-pane-scale">
+            <scale-model ref="scale"></scale-model>
+          </div>
+          <div class="basic-pane-bird">
+            <bird-eye-model ref="birdeye"></bird-eye-model>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="basic-pane-nature">
-      <nature-model ref="nature">
-        <template slot="natureslot">
-          <Button @click="$emit('on-destory')">销毁画布</Button>
-        </template>
-      </nature-model>
+      <div class="basic-pane-nature">
+        <nature-model ref="nature">
+          <template slot="natureslot">
+            <Button @click="$emit('on-destory')">销毁画布</Button>
+          </template>
+        </nature-model>
+      </div>
     </div>
   </div>
 </template>
@@ -73,6 +79,16 @@ export default {
 };
 </script>
 <style lang='less' scoped>
+.editor {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 50px auto;
+}
+.basic-menu {
+  height: 50px;
+  border-bottom: 1px solid #efefef;
+}
 .basic-pane {
   width: 100%;
   height: 100%;
@@ -92,10 +108,10 @@ export default {
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-rows: 50px auto;
+    grid-template-rows: 40px auto;
     &-tools {
       width: 100%;
-      height: 50px;
+      height: 40px;
       background: #ffffff;
       border-bottom: 1px solid #dddddd;
     }

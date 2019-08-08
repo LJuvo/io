@@ -37,19 +37,19 @@ export default graph => {
 
     // Creates the default style for vertices
     var style = [];
-    style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE;
-    style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
-    style[mxConstants.STYLE_STROKECOLOR] = primaryColor;
-    style[mxConstants.STYLE_ROUNDED] = true;
-    style[mxConstants.STYLE_FILLCOLOR] = primaryColor;
-    style[mxConstants.STYLE_GRADIENTCOLOR] = "#efefef";
-    style[mxConstants.STYLE_FONTCOLOR] = "#444";
-    style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
-    style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE;
-    style[mxConstants.STYLE_FONTSIZE] = "12";
-    style[mxConstants.STYLE_FONTSTYLE] = 1;
+    // style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE;
+    // style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
+    // style[mxConstants.STYLE_STROKECOLOR] = primaryColor;
+    // style[mxConstants.STYLE_ROUNDED] = true;
+    // style[mxConstants.STYLE_FILLCOLOR] = primaryColor;
+    // style[mxConstants.STYLE_GRADIENTCOLOR] = "#efefef";
+    // style[mxConstants.STYLE_FONTCOLOR] = "#444";
+    // style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
+    // style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE;
+    // style[mxConstants.STYLE_FONTSIZE] = "12";
+    // style[mxConstants.STYLE_FONTSTYLE] = 1;
 
-    graph.getStylesheet().putDefaultVertexStyle(style);
+    // graph.getStylesheet().putDefaultVertexStyle(style);
 
     //   //设备组合样式
     //   style = [];
@@ -82,11 +82,11 @@ export default graph => {
     //   graph.getStylesheet().putDefaultEdgeStyle(style);
 
     graph.setConnectable(true);
-    // 设置拖拽线的过程出现折线，默认为直线
-    graph.connectionHandler.createEdgeState = () => {
-        const edge = graph.createEdge();
-        return new mxCellState(graph.view, edge, graph.getCellStyle(edge));
-    };
+    // // 设置拖拽线的过程出现折线，默认为直线
+    // graph.connectionHandler.createEdgeState = () => {
+    //     const edge = graph.createEdge();
+    //     return new mxCellState(graph.view, edge, graph.getCellStyle(edge));
+    // };
     //auto navigate
     mxEdgeHandler.prototype.snapToTerminals = true;
 
@@ -161,34 +161,34 @@ export default graph => {
     //     return null;
     //   };
 
-    // Defines the default constraints for all shapes
-    mxShape.prototype.constraints = [
-        new mxConnectionConstraint(new mxPoint(0, 0), true),
-        new mxConnectionConstraint(new mxPoint(0, 1), true),
-        new mxConnectionConstraint(new mxPoint(1, 0), true),
-        new mxConnectionConstraint(new mxPoint(1, 1), true),
-        // new mxConnectionConstraint(new mxPoint(0.25, 0), true),
-        new mxConnectionConstraint(new mxPoint(0.5, 0), true),
-        // new mxConnectionConstraint(new mxPoint(0.75, 0), true),
-        // new mxConnectionConstraint(new mxPoint(0, 0.25), true),
-        new mxConnectionConstraint(new mxPoint(0, 0.5), true),
-        // new mxConnectionConstraint(new mxPoint(0, 0.75), true),
-        // new mxConnectionConstraint(new mxPoint(1, 0.25), true),
-        new mxConnectionConstraint(new mxPoint(1, 0.5), true),
-        // new mxConnectionConstraint(new mxPoint(1, 0.75), true),
-        // new mxConnectionConstraint(new mxPoint(0.25, 1), true),
-        new mxConnectionConstraint(new mxPoint(0.5, 1), true)
-        // new mxConnectionConstraint(new mxPoint(0.75, 1), true)
-    ];
+    // // Defines the default constraints for all shapes
+    // mxShape.prototype.constraints = [
+    //     new mxConnectionConstraint(new mxPoint(0, 0), true),
+    //     new mxConnectionConstraint(new mxPoint(0, 1), true),
+    //     new mxConnectionConstraint(new mxPoint(1, 0), true),
+    //     new mxConnectionConstraint(new mxPoint(1, 1), true),
+    //     // new mxConnectionConstraint(new mxPoint(0.25, 0), true),
+    //     new mxConnectionConstraint(new mxPoint(0.5, 0), true),
+    //     // new mxConnectionConstraint(new mxPoint(0.75, 0), true),
+    //     // new mxConnectionConstraint(new mxPoint(0, 0.25), true),
+    //     new mxConnectionConstraint(new mxPoint(0, 0.5), true),
+    //     // new mxConnectionConstraint(new mxPoint(0, 0.75), true),
+    //     // new mxConnectionConstraint(new mxPoint(1, 0.25), true),
+    //     new mxConnectionConstraint(new mxPoint(1, 0.5), true),
+    //     // new mxConnectionConstraint(new mxPoint(1, 0.75), true),
+    //     // new mxConnectionConstraint(new mxPoint(0.25, 1), true),
+    //     new mxConnectionConstraint(new mxPoint(0.5, 1), true)
+    //     // new mxConnectionConstraint(new mxPoint(0.75, 1), true)
+    // ];
 
-    mxConstraintHandler.prototype.pointImage = new mxImage(
-        "mxgraph/images/dot.gif",
-        6,
-        6
-    );
-    mxConstraintHandler.prototype.highlightColor = "#00ff00";
+    // mxConstraintHandler.prototype.pointImage = new mxImage(
+    //     "mxgraph/images/dot.gif",
+    //     6,
+    //     6
+    // );
+    // mxConstraintHandler.prototype.highlightColor = "#00ff00";
 
-    mxVertexHandler.prototype.manageSizers = true;
+    // mxVertexHandler.prototype.manageSizers = true;
 
     // //滚轮缩放
     // mxEvent.addMouseWheelListener(function(evt, up) {
